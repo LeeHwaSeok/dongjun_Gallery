@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "976601965011",
+    "project_id": "dongjun-gallery",
+    "storage_bucket": "dongjun-gallery.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:976601965011:android:cbe416dc000b5df5a34f26",
+        "android_client_info": {
+          "package_name": "com.dongjun_gallery"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "976601965011-nrr2ctgred51frf7v78pk30kautkiev7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dongjun_gallery",
+            "certificate_hash": "b8e880f2e840dda78f4dbe5e2e14113a7bbd58cd"
+          }
+        },
+        {
+          "client_id": "976601965011-bj3hosfivefpkukefnpn9rgrqvglua5a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0YGDzI9TgOrQF-MdUd7zt9XaB4IWqigg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "976601965011-bj3hosfivefpkukefnpn9rgrqvglua5a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
