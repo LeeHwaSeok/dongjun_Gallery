@@ -10,6 +10,7 @@ function SignInForm({isSignUp, onSubmit, form, createChangeTextHandler}) {
         hasMarginBottom
         placeholder="이메일을 입력하세요"
         value={form.email}
+        //createChageTextHandler('email')은 선언부의 name(key)에 해당하는 부분
         onChangeText={createChangeTextHandler('email')}
         autoCapitalize="none"
         autoCorrect={false}

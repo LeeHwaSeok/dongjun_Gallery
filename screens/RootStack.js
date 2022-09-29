@@ -11,6 +11,7 @@ function RootStack() {
   const {user} = useUserContext();
   return (
     <Stack.Navigator>
+      {/**유저 상태에 따라 main으로 갈지 welcome으로 갈지  */}
       {user ? (
         <>
           <Stack.Screen name="MainTab" component={MainTab} options={{headerShown: false}} />

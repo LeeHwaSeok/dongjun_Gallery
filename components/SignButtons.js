@@ -3,10 +3,11 @@ import React from 'react';
 import {ActivityIndicator, StyleSheet, View} from 'react-native';
 import CustomButton from './CustomButton';
 
+//로그인 or 회원가입 버튼
 function SignButtons({isSignUp, onSubmit, loading}) {
   const navigation = useNavigation();
 
-  const primaryTitle = isSignUp ? '회원 가입' : '로그인';
+  const primaryTitle = isSignUp ? '회원가입' : '로그인';
   const secondaryTitle = isSignUp ? '로그인' : '회원가입';
 
   const onSecondaryButtonPress = () => {
@@ -27,11 +28,7 @@ function SignButtons({isSignUp, onSubmit, loading}) {
   return (
     <View style={stlyes.buttons}>
       <CustomButton title={primaryTitle} hasMarginBottom onPress={onSubmit} />
-      <CustomButton
-        title={secondaryTitle}
-        theme="secondary"
-        onPress={onSecondaryButtonPress}
-      />
+      <CustomButton title={secondaryTitle} theme="secondary" onPress={onSecondaryButtonPress} />
     </View>
   );
 }
