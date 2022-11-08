@@ -64,7 +64,7 @@ function SignInScreen({navigation, route}) {
    */
   const createChangeTextHandler = name => value => {
     setForm({...form, [name]: value});
-    // console.log('\n name  >>>>> ', name, '\n value >>>>> ', value, '\n form  >>>>> ', form);
+    console.log('\n name  >>>>> ', name, '\n value >>>>> ', value, '\n form  >>>>> ', form);
   };
 
   //데이터를 입력받아 로그인 or 회원가입하는 부분
@@ -164,4 +164,5 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
 });
+
 export default SignInScreen;

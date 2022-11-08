@@ -8,11 +8,13 @@ import CustomButton from './CustomButton';
 import {useUserContext} from '../contexts/UserContext';
 import {launchImageLibrary} from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage';
+import Avatar from './Avatar';
 
 //로그인 후 화면임
 function SetupProfile() {
   //유저 닉네임
   const [displayName, setDisplayName] = useState('');
+
   //네비게이션 사용
   const navigation = useNavigation();
 
@@ -29,8 +31,10 @@ function SetupProfile() {
 
   //User 정보는 Context를 이용해서 app 전역으로 사용
   const {setUser} = useUserContext();
+
   //response는 안드로이드 이미지 정보를 갖고 있음
   const [response, setResponse] = useState(null);
+
   //loading은 fb와 통신할 때 딜레이 표시를 위해 사용
   const [loading, setLoading] = useState(false);
 
@@ -46,8 +50,10 @@ function SetupProfile() {
     if (response) {
       //기본 문법 => asset은 안드로이드 이미지 데이터를 갖고 있다.
       const asset = response.assets[0];
+
       //asset에서 filename과 일치하는 항목을 찾아서 확장자를 추출한다
       const extension = asset.fileName.split('.').pop(); // 확장자 추출 ex) jpg, png etc..
+
       //데이터 저장 기본문법
       //storage().ref('저장 폴더/ uid(유저명).extension(확장자)') 형식으로 저장하겠다는의미
       //storage => Rules => read, write : true 변환해야 사용가능
@@ -75,6 +81,7 @@ function SetupProfile() {
 
     //user명으로 회원가입
     createUser(user);
+
     //setUser는 UserContext(createContext).Provider로 감싸고 있어서 전역으로 사용할 수 있게함
     //쉽게말하면 로그인상태 유지임
     setUser(user);
@@ -89,7 +96,7 @@ function SetupProfile() {
 
   //안드로이드 photo 이미지를 사용하려면 필요한 구문임
   const onSelectImage = () => {
-    //photo에서 사용하는거고 / 사진찍고 바로 쓰는거도 잇음
+    //아래 구문은 사진첩을 사용하는거고 / 사진찍고 바로 쓰는거도 잇음
     launchImageLibrary(
       {
         //preset
@@ -99,8 +106,8 @@ function SetupProfile() {
         includeBase64: Platform.OS === 'android',
       },
       res => {
+        // 취소했을 경우
         if (res.didCancel) {
-          // 취소했을 경우
           return;
         }
         setResponse(res);
@@ -113,12 +120,9 @@ function SetupProfile() {
   return (
     <View style={styles.block}>
       <Pressable onPress={onSelectImage}>
-        {/*wellcome에서 기본이지미 부분임
+        {/*wellcome에서 기본이미지 부분임
         Image source 부분에서 response[안드로이드 이미지 선택]여부에 따라 이미지 출력 */}
-        <Image
-          style={styles.circle}
-          source={response ? {uri: response?.assets[0]?.uri} : require('../assets/user.png')}
-        />
+        <Avatar source={response && {uri: response.uri}} size={128}></Avatar>
       </Pressable>
       <View style={styles.form}>
         <BorderedInput
