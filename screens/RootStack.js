@@ -7,6 +7,8 @@ import {useUserContext} from '../contexts/UserContext';
 import {subscribeAuth} from '../lib/auth';
 import {getUser} from '../lib/users';
 import UploadScreen from './UploadScreen';
+import ModifyScreen from './ModifyScreen';
+import SettingScreen from './SettingScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -22,7 +24,7 @@ function RootStack() {
    */
   useEffect(() => {
     const unsubsvribe = subscribeAuth(async cureentUser => {
-      // unsubsvribe();
+      unsubsvribe();
       // console.log(cureentUser);
       if (!cureentUser) {
         return;
@@ -45,6 +47,16 @@ function RootStack() {
             name="Upload"
             component={UploadScreen}
             options={{title: '새 게시물', headerBackTitle: '뒤로가기'}}
+          ></Stack.Screen>
+          <Stack.Screen
+            name="Modify"
+            component={ModifyScreen}
+            options={{title: '설명 수정', headerBackTitle: '뒤로가기'}}
+          ></Stack.Screen>
+          <Stack.Screen
+            name="Setting"
+            component={SettingScreen}
+            options={{title: '설정', headerBackTitle: '뒤로가기'}}
           ></Stack.Screen>
         </>
       ) : (

@@ -17,6 +17,7 @@ import IconRightButton from '../components/IconRightButton';
 import {useUserContext} from '../contexts/UserContext';
 import {createPost} from '../lib/posts';
 import storage from '@react-native-firebase/storage';
+import events from '../lib/events';
 
 function UploadScreen() {
   const route = useRoute();
@@ -27,19 +28,24 @@ function UploadScreen() {
   const [description, setDescription] = useState('');
   const navigation = useNavigation();
   const {user} = useUserContext();
+
   const onSubmit = useCallback(async () => {
     navigation.pop();
     const asset = res.assets[0];
 
     const extension = asset.fileName.split('.').pop();
     const reference = storage().ref(`/photo/${user.id}/${v4()}.${extension}`);
+
     if (Platform.OS === 'android') {
       await reference.putString(asset.base64, 'base64', {contentType: asset.type});
     } else {
       await reference.putFile(asset.uri);
     }
     const photoURL = await reference.getDownloadURL();
+    console.log(photoURL);
     await createPost({description, photoURL, user});
+    //목록 새고로침
+    events.emit('refresh');
   }, [res, user, description, navigation]);
 
   useEffect(() => {

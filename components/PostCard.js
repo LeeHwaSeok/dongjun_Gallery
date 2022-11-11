@@ -1,20 +1,34 @@
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useNavigationState} from '@react-navigation/native';
 import React, {useMemo} from 'react';
 import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import {useUserContext} from '../contexts/UserContext';
+import usePostActions from '../hooks/usePostActions';
+import ActionSheetModal from './ActionSheetModal';
 import Avatar from './Avatar';
 
 function PostCard({user, photoURL, description, createAt, id}) {
+  const routeNames = useNavigationState(state => state.routeNames);
   const date = useMemo(
     () => (createAt ? new Date(createAt._seconds * 1000) : new Date()),
     [createAt],
   );
   const navigation = useNavigation();
+  const {user: me} = useUserContext();
+  const isMyPost = me.id === user.id;
+
   const onOpenProfile = () => {
-    navigation.navigate('Profile', {
-      userId: user.id,
-      displayName: user.displayName,
-    });
+    if (routeNames.find(routeName => routeName === 'MyProfile')) {
+      navigation.navigate('MyProfile');
+    } else {
+      navigation.navigate('Profile', {
+        userId: user.id,
+        displayName: user.displayName,
+      });
+    }
   };
+
+  const {isSelecting, onPressMore, onClose, actions} = usePostActions({id, description});
 
   return (
     <View style={styles.block}>
@@ -24,9 +38,14 @@ function PostCard({user, photoURL, description, createAt, id}) {
 
           <Text style={styles.displayName}>{user.displayName}</Text>
         </Pressable>
+        {isMyPost && (
+          <Pressable hitSlop={8} onPress={onPressMore}>
+            <Icon name="more-vert" size={20}></Icon>
+          </Pressable>
+        )}
       </View>
       <Image
-        source={{uri: user.photoURL}}
+        source={{uri: photoURL}}
         resizeMode="cover"
         resizeMethod="resize"
         style={styles.image}
@@ -37,6 +56,11 @@ function PostCard({user, photoURL, description, createAt, id}) {
           {date.toLocaleString()}
         </Text>
       </View>
+      <ActionSheetModal
+        visible={isSelecting}
+        actions={actions}
+        onClose={onClose}
+      ></ActionSheetModal>
     </View>
   );
 }
